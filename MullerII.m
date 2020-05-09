@@ -2,11 +2,19 @@
 close all
 clear all
 
-deltax = 10^-3;
-w_const = [-72090, 1458, -4536, -1152, -14, 14, 1];
 MAX_ITER = 10000000;
-w_cur = w_const;
+deltax = 10^-3;
+delta_2 = zeros(50, 2); 
+delta_inf = zeros(50, 2);
 
+
+
+iter_2 = 1; %pêtla do zadania 2
+for n=logspace(-1,-10,50) 
+    
+w_const = [-72090, 1458, -4536, -1152, -14, 14, 1];
+v_w_const = round(roots(flip(w_const)));
+w_cur = w_const;
 %*muller wersja II, pierwiastki szukane: 1+3j, 1-3j*
 
 x_i= 45 + 120*i;
@@ -93,6 +101,25 @@ end
 iter
 x6 = x_inc1
 
+v_x = [x1; x2; x3; x4; x5; x6];
+%ZADANIE2
+
+
+delta_2(iter_2, :) = [deltax, norm(v_x-v_w_const)/norm(v_w_const)];
+delta_inf(iter_2, :) = [deltax, norm((v_x-v_w_const),Inf)/norm(v_w_const,Inf)];
+iter_2 = iter_2 + 1;
+
+end
+
+figure('Name', 'Zagregowane b³êdy wektorów x', 'position', [700 400 700 400], 'NumberTitle','off')
+loglog(delta_2(:,1),delta_2(:,2))
+hold on;
+loglog(delta_inf(:,1), delta_inf(:,2), '.r')
+title('Zagregowane b³êdy estymat pierwiastków wielomianu');
+xlabel('dx');
+ylabel('d2, dinf');
+legend('d2','dinf');
+%
 %FUNKCJE
 
 %*funckja obliczaj¹ca pochodn¹ wielomianu dowolnego stopnia*
