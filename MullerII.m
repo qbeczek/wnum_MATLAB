@@ -1,15 +1,15 @@
 %*ustawienia poczatkowe*
 close all
 clear all
-
 MAX_ITER = 10000000;
 deltax = 10^-3;
 delta_2 = zeros(50, 2); 
 delta_inf = zeros(50, 2);
 
 iter_2 = 1; %pêtla do zadania 2
-for n=logspace(-2, -18) 
-    
+for
+    n= -2 : -1 : -18 
+clear w_const v_w_const w_cur
 w_const = [-72090, 1458, -4536, -1152, -14, 14, 1];
 v_w_const = round(roots(flip(w_const)));
 w_cur = w_const;
@@ -104,8 +104,8 @@ x(6) = x_inc1
 v_w_const = sort(v_w_const,  'ComparisonMethod', 'real');
 x = sort(x, 'ComparisonMethod', 'real');
 %ZADANIE2
-delta_2(iter_2, :) = [n, norm(x-v_w_const)/norm(v_w_const)];
-delta_inf(iter_2, :) = [n, norm((x-v_w_const),Inf)/norm(v_w_const,Inf)];
+delta_2(iter_2, :) = [n, norm(x'-v_w_const)/norm(v_w_const)];
+delta_inf(iter_2, :) = [n, norm((x'-v_w_const),inf)/norm(v_w_const,inf)];
 iter_2 = iter_2 + 1;
 
 end
