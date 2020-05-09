@@ -4,7 +4,7 @@ clear all
 
 deltax = 10^-3;
 w_const = [-72090, 1458, -4536, -1152, -14, 14, 1];
-MAX_ITER = 100000;
+MAX_ITER = 10000000;
 w_cur = w_const;
 
 %*muller wersja II, pierwiastki szukane: 1+3j, 1-3j*
@@ -33,7 +33,7 @@ end
 iter
 x1 = x_inc1
 x2 = x_inc1'
-w_cur = def_kw(w_cur, x_i);
+w_cur = def_kw(w_cur, x_i)
 
 
 %*Muller wersja I, pierwiastki do znalezienia: -8 + 5j, -8 - 5j*
@@ -58,12 +58,12 @@ end
 iter
 x3 = x_inc1
 x4 = x_inc1'
-w_cur = def_kw(w_cur, x_i);
+w_cur = def_kw(w_cur, x_i)
 
 %*Metoda siecznych, pierwiastek do znalezienia: 9
 clear iter x_i x_inc1
-x_i = 9;
-x_dec1 = 8;
+x_i = 120;
+x_dec1 = 100;
 iter = 0; %pocz¹tek pêtli iteracyjnej metody siecznych
 while (iter<MAX_ITER)
     iter = iter + 1;
@@ -81,7 +81,7 @@ w_cur = def_lin(w_cur, x_i)
 %*metoda stycznych, pierwiastek do znalezienia: -9
 clear x_i iter x_inc1
 wbx_diff = pochodna(w_cur, 1);
-x_i = -30;
+x_i = -450;
 iter = 0; %%pocz¹tek pêtli iteracyjnej metody stycznych Newtona
 while (iter<MAX_ITER)
     iter = iter + 1;
@@ -115,14 +115,16 @@ w_new(n-3) = w_old(n-1)+p*w_new(n-2);
    for n=(n-4):-1:1
     w_new(n) = w_old(n+2) + p*w_new(n+1)+r*w_new(n+2);
    end
+  w_new=round(w_new);
 end
 
 %*deflacja liniowa*
 function w_new = def_lin(w_old, x)
 w_new(length(w_old) - 1) = w_old(length(w_old))
     for n = (length(w_new)-1):-1:1
-        w_new(n) = w_old(n+1) + x*w_old(n+1);
+        w_new(n) = w_old(n+1) + x*w_new(n+1);
     end
+      w_new=round(w_new);
 end
 
 
