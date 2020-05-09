@@ -7,10 +7,8 @@ deltax = 10^-3;
 delta_2 = zeros(50, 2); 
 delta_inf = zeros(50, 2);
 
-
-
 iter_2 = 1; %pêtla do zadania 2
-for n=logspace(-1,-10,50) 
+for n=logspace(-2, -18) 
     
 w_const = [-72090, 1458, -4536, -1152, -14, 14, 1];
 v_w_const = round(roots(flip(w_const)));
@@ -39,8 +37,8 @@ while (iter<MAX_ITER)
     x_i = x_inc1;
 end
 iter
-x1 = x_inc1
-x2 = x_inc1'
+x(1) = x_inc1
+x(2) = x_inc1'
 w_cur = def_kw(w_cur, x_i)
 
 
@@ -64,8 +62,8 @@ while (iter<MAX_ITER)
     x_i = x_inc1;
 end
 iter
-x3 = x_inc1
-x4 = x_inc1'
+x(3) = x_inc1
+x(4) = x_inc1'
 w_cur = def_kw(w_cur, x_i)
 
 %*Metoda siecznych, pierwiastek do znalezienia: 9
@@ -83,7 +81,7 @@ while (iter<MAX_ITER)
     x_i = x_inc1;
 end
 iter
-x5 = x_inc1
+x(5) = x_inc1
 w_cur = def_lin(w_cur, x_i)
 
 %*metoda stycznych, pierwiastek do znalezienia: -9
@@ -99,18 +97,22 @@ while (iter<MAX_ITER)
     x_i = x_inc1;
 end
 iter
-x6 = x_inc1
+x(6) = x_inc1
 
-v_x = [x1; x2; x3; x4; x5; x6];
+
+
+v_w_const = sort(v_w_const,  'ComparisonMethod', 'real');
+x = sort(x, 'ComparisonMethod', 'real');
 %ZADANIE2
-
-
-delta_2(iter_2, :) = [deltax, norm(v_x-v_w_const)/norm(v_w_const)];
-delta_inf(iter_2, :) = [deltax, norm((v_x-v_w_const),Inf)/norm(v_w_const,Inf)];
+delta_2(iter_2, :) = [n, norm(x-v_w_const)/norm(v_w_const)];
+delta_inf(iter_2, :) = [n, norm((x-v_w_const),Inf)/norm(v_w_const,Inf)];
 iter_2 = iter_2 + 1;
 
 end
-
+x
+v_w_const
+delta_2
+delta_inf
 figure('Name', 'Zagregowane b³êdy wektorów x', 'position', [700 400 700 400], 'NumberTitle','off')
 loglog(delta_2(:,1),delta_2(:,2))
 hold on;
